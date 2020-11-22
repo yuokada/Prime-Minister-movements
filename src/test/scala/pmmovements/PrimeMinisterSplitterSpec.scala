@@ -1,4 +1,4 @@
-package example
+package pmmovements
 
 import org.scalatest._
 import org.scalatest.matchers.must.Matchers

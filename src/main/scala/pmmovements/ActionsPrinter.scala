@@ -1,4 +1,4 @@
-package example
+package pmmovements
 
 import java.io.FileWriter
 import java.time.format.DateTimeFormatter
@@ -19,6 +19,5 @@ class ActionsPrinter(dstFilename: String) extends AutoCloseable {
   def close(): Unit ={
     csvWriter.flush()
     csvWriter.close()
-    println(s"DEBUG: $dstFilename is close!")
   }
 }

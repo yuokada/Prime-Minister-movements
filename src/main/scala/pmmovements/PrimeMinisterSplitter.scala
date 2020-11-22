@@ -1,4 +1,4 @@
-package example
+package pmmovements
 
 import java.nio.file.{Files, Paths}
 import java.time.ZonedDateTime
@@ -12,8 +12,10 @@ case class ProcessorConfig(
 )
 
 case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None) {
-  def this(action: String, actionDate: ZonedDateTime) = this(action.replace("\t", " | "), actionDate)
-//  this.action = action.replace("\t", " | ")
+//  def this(action: String, actionDate: ZonedDateTime) = {
+//    this(action.replace("\t", " | "), actionDate, None)
+//  }
+  this.action = action.replace("\t", " | ")
 }
 
 object PrimeMinisterSplitter {
