@@ -21,7 +21,7 @@ class ActionFormatter() {
 }
 
 class ActionLineParser(year: Int) {
-  private val baseFormat: Regex = "\\d{1,2}/\\d{1,2}\\s+\\d{1,2}:\\d{1,2}\\s+.*$".r
+  private val baseFormat: Regex     = "\\d{1,2}/\\d{1,2}\\s+\\d{1,2}:\\d{1,2}\\s+.*$".r
   private val onlyDateFormat: Regex = "\\d{1,2}/\\d{1,2}\t+.*$".r // "\\d{1,2}/\\d{1,2}\t+.*$".r.findFirstIn(line)
   private val onlyTimeFormat: Regex = "\\d{1,2}:\\d{1,2}\t+.*$".r
 
@@ -34,7 +34,7 @@ class ActionLineParser(year: Int) {
     // e.g: 4/30	1:35	(日本時間午前）政府専用機でＵＡＥ＝アラブ首長国連邦のアブダビ国際空港着
     val result = line.strip().split("\\s+", 3).toSeq
 
-    val monthDate = result(0).split("/").map(n => n.toInt).toSeq
+    val monthDate    = result(0).split("/").map(n => n.toInt).toSeq
     val (month, day) = (monthDate(0), monthDate(1))
 
     val hourDate = result(1).split(":").map(n => n.toInt).toSeq
@@ -49,7 +49,7 @@ class ActionLineParser(year: Int) {
     // e.g: 4/30	(日本時間午前）政府専用機でＵＡＥ＝アラブ首長国連邦のアブダビ国際空港着
     val result = line.strip().split("\\s+", 2).toSeq
 
-    val monthDate = result(0).split("/").map(n => n.toInt).toSeq
+    val monthDate    = result(0).split("/").map(n => n.toInt).toSeq
     val (month, day) = (monthDate(0), monthDate(1))
 
     val zdt = ZonedDateTime.of(this.year, month, day, 9, 0, 0, 0, jst)
@@ -61,12 +61,12 @@ class ActionLineParser(year: Int) {
     // e.g: 17:54	東京・大塚の護国寺着。中曽根康弘元総理大臣の通夜に参列
     val result = line.strip().split("\\s+", 2).toSeq
 
-    val hourMinutes = result(0).split(":").map(n => n.toInt).toSeq
+    val hourMinutes     = result(0).split(":").map(n => n.toInt).toSeq
     val (hour, minutes) = (hourMinutes(0), hourMinutes(1))
 
     val pDate = getPreviousDateInformation()
     val month = pDate.getMonthValue
-    val day = pDate.getDayOfMonth
+    val day   = pDate.getDayOfMonth
 
     val zdt = ZonedDateTime.of(this.year, month, day, hour, minutes, 0, 0, jst)
     val row = PrimeMinisterAction(action = result(1), actionDate = zdt)

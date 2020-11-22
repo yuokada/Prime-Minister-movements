@@ -10,7 +10,7 @@ case class ProcessorConfig(
     ProcessedDirectory: String
 )
 
-case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None)  {
+case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None) {
   this.action = action.replace("\t", " | ")
 }
 
@@ -50,7 +50,7 @@ object PrimeMinisterSplitter {
                 val action = actParser.parser(l)
                 action match {
                   case Some(row) => printer.writeNext(row)
-                  case None    => println(s"DEBUG: ${i} ${l}")
+                  case None      => println(s"DEBUG: ${i} ${l}")
                 }
               }
             }

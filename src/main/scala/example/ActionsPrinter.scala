@@ -9,7 +9,7 @@ class ActionsPrinter(dstFilename: String) {
 
   private val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
-  private val writer = new FileWriter(dstFilename)
+  private val writer    = new FileWriter(dstFilename)
   private val csvWriter = new CSVWriterBuilder(writer).withSeparator('\t').build()
 
   //  val beanToCsv: Nothing = new Nothing(writer).build
