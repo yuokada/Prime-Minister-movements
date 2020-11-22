@@ -1,24 +1,8 @@
 package example
 
-import java.time.format.DateTimeFormatter
 import java.time.{ZoneId, ZonedDateTime}
 
 import scala.util.matching.Regex
-
-@deprecated
-class ActionFormatter() {
-  private val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-
-  def formatWithTab(row: PrimeMinisterAction): String = {
-    format(row, "\t")
-  }
-
-  def format(row: PrimeMinisterAction, separator: String = "\t"): String = {
-    // e.g: 4/30	1:35	(日本時間午前）政府専用機でＵＡＥ＝アラブ首長国連邦のアブダビ国際空港着
-    s"${row.actionDate.format(DateTimeFormatter.ISO_INSTANT)}${separator}${row.action}"
-  }
-
-}
 
 class ActionLineParser(year: Int) {
   private val baseFormat: Regex     = "\\d{1,2}/\\d{1,2}\\s+\\d{1,2}:\\d{1,2}\\s+.*$".r

@@ -4,10 +4,11 @@ import java.nio.file.{Files, Paths}
 import java.time.ZonedDateTime
 
 import scala.io.Source
+import scala.util.Using
 
 case class ProcessorConfig(
-    OriginalDirectory: String,
-    ProcessedDirectory: String
+    srcDirectory: String,
+    dstDirectory: String
 )
 
 case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None) {
@@ -23,9 +24,9 @@ object PrimeMinisterSplitter {
   }
 
   def main(args: Array[String]): Unit = {
-    val config = ProcessorConfig("./1stprocesseed", ProcessedDirectory = "./finalProcessed")
+    val config = ProcessorConfig("./1stprocesseed", dstDirectory = "./finalProcessed")
 
-    val srcDirectory = java.nio.file.Paths.get(config.OriginalDirectory)
+    val srcDirectory = Paths.get(config.srcDirectory)
     if (!Files.isDirectory(srcDirectory)) {
       println(s"${srcDirectory} is not a directory! Please set a directory")
       return
@@ -37,12 +38,9 @@ object PrimeMinisterSplitter {
       .forEach(f => {
         println("DEBUG: " + f)
         val year = getYearFromFilename(f.getFileName.toString)
-        // https://qiita.com/ka2kama/items/cd846b15fbb56cdbc9ea
-        // https://medium.com/@dkomanov/scala-try-with-resources-735baad0fd7d
         val actParser = new ActionLineParser(year)
-        val source    = Source.fromFile(name = f.toString)
-        val printer   = new ActionsPrinter(config.ProcessedDirectory + "/" + f.getFileName.toString)
-        try {
+        val printer   = new ActionsPrinter(config.dstDirectory + "/" + f.getFileName.toString)
+        Using(Source.fromFile(name = f.toString)) { source =>
           source.getLines().zipWithIndex.foreach { case (l, i) =>
             l.length match {
               case 0 => // Nothing
@@ -55,8 +53,6 @@ object PrimeMinisterSplitter {
               }
             }
           }
-        } finally {
-          source.close()
         }
       })
   }
