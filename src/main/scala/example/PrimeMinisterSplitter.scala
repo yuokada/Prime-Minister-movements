@@ -12,7 +12,8 @@ case class ProcessorConfig(
 )
 
 case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None) {
-  this.action = action.replace("\t", " | ")
+  def this(action: String, actionDate: ZonedDateTime) = this(action.replace("\t", " | "), actionDate)
+//  this.action = action.replace("\t", " | ")
 }
 
 object PrimeMinisterSplitter {
@@ -37,13 +38,16 @@ object PrimeMinisterSplitter {
 //      .filter(filename => !filename.getFileName.toString.startsWith("2020"))
       .forEach(f => {
         println("DEBUG: " + f)
-        val year = getYearFromFilename(f.getFileName.toString)
+        val year      = getYearFromFilename(f.getFileName.toString)
         val actParser = new ActionLineParser(year)
-        val printer   = new ActionsPrinter(config.dstDirectory + "/" + f.getFileName.toString)
-        Using(Source.fromFile(name = f.toString)) { source =>
-          source.getLines().zipWithIndex.foreach { case (l, i) =>
+        Using.Manager { use =>
+          val sourceFile = use(Source.fromFile(name = f.toString))
+          val dstTsvFile = config.dstDirectory + "/" + f.getFileName.toString.replace("csv", "tsv")
+          val printer    = use(new ActionsPrinter(dstTsvFile))
+
+          sourceFile.getLines().zipWithIndex.foreach { case (l, i) =>
             l.length match {
-              case 0 => // Nothing
+              case 0 => // Skip empty lines
               case _ => {
                 val action = actParser.parser(l)
                 action match {
