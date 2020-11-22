@@ -6,7 +6,10 @@ ThisBuild / organizationName := "example"
 lazy val root = (project in file("."))
   .settings(
     name := "Prime Ministers movement",
-      libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.2" % Test
+      libraryDependencies ++= Seq(
+        "com.opencsv" % "opencsv" % "5.3",
+        "org.scalatest" %% "scalatest" % "3.2.2"
+      )
 )
 
 // Uncomment the following for publishing to Sonatype.

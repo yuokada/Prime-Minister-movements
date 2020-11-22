@@ -10,9 +10,11 @@ case class ProcessorConfig(
     ProcessedDirectory: String
 )
 
-object PrimeMinisterSplitter {
+case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None)  {
+  this.action = action.replace("\t", " | ")
+}
 
-  case class PrimeMinisterAction(action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None)
+object PrimeMinisterSplitter {
 
   // Utility functions
   def getYearFromFilename(filename: String): Int = {
@@ -39,6 +41,7 @@ object PrimeMinisterSplitter {
         // https://medium.com/@dkomanov/scala-try-with-resources-735baad0fd7d
         val actParser = new ActionLineParser(year)
         val source    = Source.fromFile(name = f.toString)
+        val printer   = new ActionsPrinter(config.ProcessedDirectory + "/" + f.getFileName.toString)
         try {
           source.getLines().zipWithIndex.foreach { case (l, i) =>
             l.length match {
@@ -46,7 +49,7 @@ object PrimeMinisterSplitter {
               case _ => {
                 val action = actParser.parser(l)
                 action match {
-                  case Some(_) =>
+                  case Some(row) => printer.writeNext(row)
                   case None    => println(s"DEBUG: ${i} ${l}")
                 }
               }
