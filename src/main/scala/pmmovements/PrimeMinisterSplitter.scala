@@ -3,6 +3,8 @@ package pmmovements
 import java.nio.file.{Files, Paths}
 import java.time.ZonedDateTime
 
+import wvlet.log.LogSupport
+
 import scala.io.Source
 import scala.util.Using
 
@@ -18,7 +20,7 @@ case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, ac
   this.action = action.replace("\t", " | ")
 }
 
-object PrimeMinisterSplitter {
+object PrimeMinisterSplitter extends LogSupport {
 
   // Utility functions
   def getYearFromFilename(filename: String): Int = {
@@ -31,7 +33,7 @@ object PrimeMinisterSplitter {
 
     val srcDirectory = Paths.get(config.srcDirectory)
     if (!Files.isDirectory(srcDirectory)) {
-      println(s"${srcDirectory} is not a directory! Please set a directory")
+      error(s"${srcDirectory} is not a directory! Please set a directory")
       return
     }
 
@@ -39,7 +41,7 @@ object PrimeMinisterSplitter {
       .list(srcDirectory).sorted
 //      .filter(filename => !filename.getFileName.toString.startsWith("2020"))
       .forEach(f => {
-        println("DEBUG: " + f)
+        info(s"INFO: ${f} is now processing")
         val year      = getYearFromFilename(f.getFileName.toString)
         val actParser = new ActionLineParser(year)
         Using.Manager { use =>
@@ -54,7 +56,7 @@ object PrimeMinisterSplitter {
                 val action = actParser.parser(l)
                 action match {
                   case Some(row) => printer.writeNext(row)
-                  case None      => println(s"DEBUG: ${i} ${l}")
+                  case None      => info(s"DEBUG: ${i} ${l}")
                 }
               }
             }
