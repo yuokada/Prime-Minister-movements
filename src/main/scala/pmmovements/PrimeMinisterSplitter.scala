@@ -12,9 +12,9 @@ case class ProcessorConfig(
 )
 
 case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, actionDateString: Option[String] = None) {
-//  def this(action: String, actionDate: ZonedDateTime) = {
-//    this(action.replace("\t", " | "), actionDate, None)
-//  }
+  def this(action: String, actionDate: ZonedDateTime) = {
+    this(action.replace("\t", " | "), actionDate, None)
+  }
   this.action = action.replace("\t", " | ")
 }
 
