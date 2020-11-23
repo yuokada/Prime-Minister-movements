@@ -47,7 +47,8 @@ object PrimeMinisterSplitter extends LogSupport {
         Using.Manager { use =>
           val sourceFile = use(Source.fromFile(name = f.toString))
           val dstTsvFile = config.dstDirectory + "/" + f.getFileName.toString.replace("csv", "tsv")
-          val printer    = use(new ActionsPrinter(dstTsvFile))
+//          val printer    = use(new ActionsPrinter(dstTsvFile))
+          val printer = use(new ActionJSONLPrinter(dstTsvFile.replace("tsv", "jsonl")))
 
           sourceFile.getLines().zipWithIndex.foreach { case (l, i) =>
             l.length match {
