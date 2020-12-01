@@ -6,6 +6,8 @@ TBW
 $ nkf -w -Lu --overwrite original/*
 ```
 
+see: [Linux 【 nkf, iconv 】 文字＆改行コード変換 \- Qiita](https://qiita.com/r18j21/items/78d8501888839b13c770)
+
 ## Link
 - [検索＆ダウンロード \| 総理、きのう何してた？ \| NHK政治マガジン](https://www.nhk.or.jp/politics/souri/search/index.html)
 
@@ -17,7 +19,7 @@ $ nkf -w -Lu --overwrite original/*
 
 ### Overload constructor for Scala's Case Classes?
 
-```scala 
+```scala
 case class Foo(bar: Int, baz: Int) {
     def this(bar: Int) = this(bar, 0)
 }
