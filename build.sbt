@@ -1,4 +1,6 @@
+import coursierapi.shaded.scala.util.control.ControlThrowable
 import sbt.Def.spaceDelimited
+import sbt.io.Using
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files.newBufferedWriter
@@ -12,9 +14,22 @@ ThisBuild / organization := "com.pmmovements"
 ThisBuild / organizationName := "pmmovements"
 lazy val AIRFRAME_VERSION = "20.11.0"
 
+scalafixDependencies in ThisBuild += "org.scala-lang.modules" %% "scala-collection-migrations" % "2.3.2"
+//addCompilerPlugin(scalafixSemanticdb)
+scalacOptions ++= List("-Yrangepos", "-P:semanticdb:synthetics:on")
+
 lazy val root = (project in file("."))
   .settings(
     name := "Prime Ministers movement",
+
+    semanticdbEnabled := true, // enable SemanticDB
+    semanticdbVersion := scalafixSemanticdb.revision, // use Scalafix compatible version
+
+    addCompilerPlugin(scalafixSemanticdb),
+    scalacOptions ++= List(
+      "-Yrangepos",
+//      "-Ywarn-unused-import"
+    ),
     libraryDependencies ++= Seq(
       "com.opencsv"         % "opencsv"        % "5.3",
       "org.wvlet.airframe" %% "airframe-codec" % AIRFRAME_VERSION,
@@ -25,6 +40,7 @@ lazy val root = (project in file("."))
   )
   .settings {
     crawl := {
+      // import scala.util
       val yearAndMonth: String = spaceDelimited("<args>").parsed match {
         case args if args.nonEmpty => args.head
         case _ =>
@@ -39,6 +55,7 @@ lazy val root = (project in file("."))
       response.mkString.split("\n").foreach(line => writer.write(line.stripTrailing() + "\n"))
       writer.close()
     }
+
   }
 
 lazy val crawl = inputKey[Unit]("Fetch a CSV file from web")

@@ -9,5 +9,6 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.2")
 addSbtPlugin("org.xerial.sbt" % "sbt-pack"     % "0.13")
 scalacOptions ++= Seq("-deprecation", "-feature")
 
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.25")
 // Available since sbt-1.4.0
 //addDependencyTreePlugin
