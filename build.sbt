@@ -1,3 +1,11 @@
+import sbt.Def.spaceDelimited
+
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files.newBufferedWriter
+import java.nio.file.Paths
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 ThisBuild / scalaVersion := "2.13.3"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.pmmovements"
@@ -15,3 +23,22 @@ lazy val root = (project in file("."))
       "org.scalatest"      %% "scalatest"      % "3.2.2"
     )
   )
+  .settings {
+    crawl := {
+      val yearAndMonth: String = spaceDelimited("<args>").parsed match {
+        case args if args.nonEmpty => args.head
+        case _ =>
+          val today = java.time.LocalDate.now(ZoneId.of("Asia/Tokyo"))
+          today.format(DateTimeFormatter.ofPattern("YYYYMM"))
+      }
+      val url = s"https://www.nhk.or.jp/politics/souri/csv/${yearAndMonth}.csv"
+      println(s"Fetch from ${url} ...")
+      val response = scala.io.Source.fromURL(url)(StandardCharsets.UTF_16)
+
+      val writer = newBufferedWriter(Paths.get(s"original/${yearAndMonth}.csv"), StandardCharsets.UTF_8)
+      response.mkString.split("\n").foreach(line => writer.write(line.stripTrailing() + "\n"))
+      writer.close()
+    }
+  }
+
+lazy val crawl = inputKey[Unit]("Fetch a CSV file from web")
