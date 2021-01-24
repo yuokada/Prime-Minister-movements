@@ -1,13 +1,15 @@
 ## 首相動静クローラー
 TBW
 
-```
-# UTF-8 & 改行コードの変換
-$ nkf -w -Lu --overwrite original/*
+```shell
+# 今月の首相動静CSVを取得
+$ ./sbt crawl
+
+# 指定月(2020年12月)の首相動静CSVを取得
+$ ./sbt "crawl 202012"
 ```
 
-see: [Linux 【 nkf, iconv 】 文字＆改行コード変換 \- Qiita](https://qiita.com/r18j21/items/78d8501888839b13c770)
-
+[comment]: <> (see: [Linux 【 nkf, iconv 】 文字＆改行コード変換 \- Qiita]&#40;https://qiita.com/r18j21/items/78d8501888839b13c770&#41;)
 
 ### Install java
 
