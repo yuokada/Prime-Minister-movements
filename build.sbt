@@ -26,6 +26,11 @@ lazy val root = (project in file("."))
   .settings {
     crawl := {
       val yearAndMonth: String = spaceDelimited("<args>").parsed match {
+        case args if args.mkString(" ") == "last month" => {
+          val lastMonth = java.time.LocalDate.now(ZoneId.of("Asia/Tokyo"))
+            .minusMonths(1)
+          lastMonth.format(DateTimeFormatter.ofPattern("YYYYMM"))
+        }
         case args if args.nonEmpty => args.head
         case _ =>
           val today = java.time.LocalDate.now(ZoneId.of("Asia/Tokyo"))
