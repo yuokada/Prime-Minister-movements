@@ -5,20 +5,18 @@ on:
   push:
     branches:
       - main
+      - gh-actions
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        python-version: [
-          "3.9",
-        ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: '11'
       - name: Install dependencies
         run: |
@@ -29,15 +27,13 @@ jobs:
       - name: Crawl from the web site
         run: |
           ./sbt crawl
-          ls -lhtr && tree
-          yq -h
-          yq -c "." db.yaml > db.json
-#      - name: Commit db.json
-#        run: |
-#          git config --global user.email yuokada@users.noreply.github.com
-#          git config --global user.name "Yukihiro Okada"
-#          git add db.json
-#          git commit -m "[skip ci] Update db.json" db.json
-#      - name: Push db.json
-#        run: |
-#          git push origin HEAD
+          ls -lhtr ./original && tree ./original
+      - name: Commit crawled files
+        run: |
+          git config --global user.email yuokada@users.noreply.github.com
+          git config --global user.name "Yukihiro Okada"
+          git add ./original
+          git commit -m "[skip ci] Update crawled files" ./original
+      - name: Push crawled files
+        run: |
+          git push origin HEAD
