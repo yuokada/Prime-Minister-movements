@@ -10,4 +10,4 @@ addSbtPlugin("org.xerial.sbt" % "sbt-pack"     % "0.13")
 scalacOptions ++= Seq("-deprecation", "-feature")
 
 // Available since sbt-1.4.0
-//addDependencyTreePlugin
+addDependencyTreePlugin

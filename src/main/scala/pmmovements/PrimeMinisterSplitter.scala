@@ -21,6 +21,7 @@ case class PrimeMinisterAction(var action: String, actionDate: ZonedDateTime, ac
 }
 
 object PrimeMinisterSplitter extends LogSupport {
+  val config = ProcessorConfig("./1stprocesseed", dstDirectory = "./finalProcessed")
 
   // Utility functions
   def getYearFromFilename(filename: String): Int = {
@@ -29,8 +30,6 @@ object PrimeMinisterSplitter extends LogSupport {
   }
 
   def main(args: Array[String]): Unit = {
-    val config = ProcessorConfig("./1stprocesseed", dstDirectory = "./finalProcessed")
-
     val srcDirectory = Paths.get(config.srcDirectory)
     if (!Files.isDirectory(srcDirectory)) {
       error(s"${srcDirectory} is not a directory! Please set a directory")
