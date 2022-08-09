@@ -10,7 +10,7 @@ ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.pmmovements"
 ThisBuild / organizationName := "pmmovements"
-lazy val AIRFRAME_VERSION = "21.12.0"
+lazy val AIRFRAME_VERSION = "22.5.0"
 
 lazy val root = (project in file("."))
   .settings(
