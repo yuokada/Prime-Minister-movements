@@ -61,7 +61,7 @@ jobs:
           git config --global user.email yuokada@users.noreply.github.com
           git config --global user.name "Yukihiro Okada"
           git add ./original
-          git commit -m "[skip ci] Update crawled files" ./original || true
+          git commit -m "[skip ci] Update crawled files on monthly crawling scheduler" ./original || true
       - name: Push crawled files
         run: |
           git push origin HEAD
