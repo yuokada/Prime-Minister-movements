@@ -16,7 +16,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "Prime Ministers movement",
     libraryDependencies ++= Seq(
-      "com.opencsv"         % "opencsv"        % "5.3",
+      "com.opencsv"         % "opencsv"        % "5.7.1",
       "org.wvlet.airframe" %% "airframe-codec" % AIRFRAME_VERSION,
       "org.wvlet.airframe" %% "airframe-json"  % AIRFRAME_VERSION,
       "org.wvlet.airframe" %% "airframe-log"   % AIRFRAME_VERSION,
