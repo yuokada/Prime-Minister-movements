@@ -1,8 +1,9 @@
 # Copy from https://github.com/scala-steward-org/scala-steward-action#usage
 # This workflow will launch at 00:00 every Sunday
 on:
+  workflow_dispatch: # Allow running on-demand
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 1'
 
 name: Launch Scala Steward
 
