@@ -20,7 +20,7 @@ lazy val root = (project in file("."))
       "org.wvlet.airframe" %% "airframe-codec" % AIRFRAME_VERSION,
       "org.wvlet.airframe" %% "airframe-json"  % AIRFRAME_VERSION,
       "org.wvlet.airframe" %% "airframe-log"   % AIRFRAME_VERSION,
-      "org.scalatest"      %% "scalatest"      % "3.2.2"
+      "org.scalatest"      %% "scalatest"      % "3.2.18"
     )
   )
   .settings {
