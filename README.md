@@ -1,5 +1,6 @@
 ## 首相動静クローラー
-TBW
+
+**The web site, NHK政治マガジン, has been shutdown.**
 
 ```shell
 # 今月の首相動静CSVを取得
