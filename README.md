@@ -29,3 +29,4 @@ $ ./sbt run
 
 ## Link
 - [検索＆ダウンロード \| 総理、きのう何してた？ \| NHK政治マガジン](https://www.nhk.or.jp/politics/souri/search/index.html)
+- [首相動静のニュース一覧 \| NHKニュース](https://www3.nhk.or.jp/news/word/0002532.html#!/0/)
