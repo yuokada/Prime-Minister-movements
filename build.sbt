@@ -6,7 +6,7 @@ import java.nio.file.Paths
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-ThisBuild / scalaVersion := "2.13.15"
+ThisBuild / scalaVersion := "2.13.16"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.pmmovements"
 ThisBuild / organizationName := "pmmovements"
